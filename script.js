@@ -36,20 +36,29 @@ inputFile.addEventListener("change", (e) => {
 
 document.addEventListener("JSONDataLoaded", (e) => {
     let finalData = [...e.detail];
-    alert(finalData.length)
-    alert(Object.entries(finalData[0]))
+    let key_list = []
+    let str_header = ""
+    for (let key in finalData[0]) {
+        key_list.push(key)
+        str_header += `<th scope=\"col\">${key}</th>`
+    }
+    str_header += '<th></th>'
+    str_header = `<tr>${str_header}</tr>`
+
+    const theader = document.getElementById("theader");
+    theader.innerHTML = str_header
 
     const tableBody = document.getElementById("table-body");
     const wholeTable = document.querySelector(".table");
 
     wholeTable.classList.remove("d-none");
 
+    tableBody.innerHTML = ""
     finalData.forEach((data) => {
         // console.log(data);
-        const tableData = `<th scope="row">${data.id}</th>` +
-            `<td>${data.fname} ${data.lname}</td>` +
-            `<td>${data.balance}</td>` +
-            `<td><button type="button" class="btn btn-primary" id="${data.id}" data-bs-toggle="modal" data-bs-target="#exampleModal">Details</button></td>`;
+        let tableData = ''
+        key_list.map( (e, i) => tableData +=`<th scope="row">${data[e]}</th>`)
+        tableData += `<td><button type="button" class="btn btn-primary" id="${data.id}" data-bs-toggle="modal" data-bs-target="#exampleModal">Details</button></td>`;
 
         const tableRow = document.createElement("tr");
         tableRow.innerHTML = tableData;
