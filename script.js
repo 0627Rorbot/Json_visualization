@@ -36,6 +36,8 @@ inputFile.addEventListener("change", (e) => {
 
 document.addEventListener("JSONDataLoaded", (e) => {
     let finalData = [...e.detail];
+    alert(finalData.length)
+    alert(Object.entries(finalData[0]))
 
     const tableBody = document.getElementById("table-body");
     const wholeTable = document.querySelector(".table");
